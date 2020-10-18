@@ -1,5 +1,5 @@
 # Stable Roommate Generalised
-A heuristic algorithm for solving generalised stable-roommate problem, inspired by the difficulty in forming groups for assignments.
+A heuristic algorithm for solving generalised stable-roommate problem, inspired by the difficulty in forming groups for group projects.
 
 The algorithm uses cardinal method (rating each member on a scale) instead of the usual preference ordering, because it carry more information, are easier to collect, and make aggregating preferences easier. 
 
