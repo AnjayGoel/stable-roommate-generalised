@@ -4,9 +4,6 @@ import random
 import math
 from subprocess import call
 import os
-import time
-
-startTime = time.time()
 
 
 def clear():
@@ -35,12 +32,21 @@ class Game:
         prefs = np.genfromtxt(filePath, delimiter=',')
         return Game(prefs, r)
 
-    def getPref(self, x: int, y: List[int]) -> int:
+    def getMemPrefForGroup(self, mem: int, grp: List[int]) -> int:
         pref: int = 0
-        for i in y:
-            pref += self.prefs[x][i]
-        pref = pref * (1.0 / len(y))
+        for i in grp:
+            pref += self.prefs[mem][i]
+        pref = pref * (1.0 / len(grp))
         return pref
+    
+
+    def getGroupPrefForMem(self, mem: int, grp: List[int]) -> int:
+        pref: int = 0
+        for i in grp:
+            pref += self.prefs[i][mem]
+        pref = pref * (1.0 / len(grp))
+        return pref
+        
 
     def getGroupScore(self, y: List[int]) -> int:
         if (len(y) <= 1):
@@ -66,7 +72,10 @@ class Game:
         self.filled.extend(self.unfilled)
         self.unfilled = []
         self.optimize(useFilled=True)
-        return self.getNetScore(), self.filled
+        grps = []
+        for i in self.filled:
+            grps.append(i.members)
+        return self.getNetScore(), grps
 
     def optimize(self, useFilled: bool = True):
         if (useFilled):
@@ -121,7 +130,7 @@ class Game:
 
         for i, mem in enumerate(self.ungrouped):
             for j, grp in enumerate(self.unfilled):
-                tempPref[i][j] = self.getPref(mem, grp.members)
+                tempPref[i][j] = self.getMemPrefForGroup(mem, grp.members)
 
         for i, mem in enumerate(self.ungrouped):
             tempPrefOrder[i] = np.argsort(tempPref[i])[::-1]
@@ -141,7 +150,8 @@ class Game:
 
                     grp = self.unfilled[j]
                     proposed[i][j] = True
-                    if (tempPref[i][j] > grp.tempScore):
+                    pref = self.getGroupPrefForMem(mem,grp.members)
+                    if (pref > grp.tempScore):
                         if grp.tempMember >= 0:
                             isTempGrouped[self.ungrouped.index(
                                 grp.tempMember)] = False
@@ -181,7 +191,7 @@ class Group:
 
     def addTemp(self, x: int) -> int:
         self.tempMember = x
-        self.tempScore = self.game.getPref(x, self.members)
+        self.tempScore = self.game.getGroupPrefForMem(x, self.members)
         return self.tempScore
 
     def addPermanently(self):
