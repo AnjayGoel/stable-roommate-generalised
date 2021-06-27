@@ -1,7 +1,6 @@
-from algorithm import *
 import numpy as np
-import random
-import math
+
+from algorithm import *
 
 n = 128
 r = 4
@@ -19,7 +18,7 @@ for grp in perfect_groups:
             pref[i][j]=10
 '''
 
-game = Game(pref, r=r, iter2=2, iter1=2)
-score, groups = game.solve()
+matching = Matching(pref, group_size=r, iter_count=2, final_iter_count=2)
+score, groups = matching.solve()
 print(score)
 print(groups)
