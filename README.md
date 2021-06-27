@@ -10,7 +10,8 @@ carries more information, is easier to collect, and makes aggregating preference
 
 * A square matrix `pref` where `pref[i][j]` is preference (or rating) of  `i` for `j`
 * `group_size`: Number of members in each group.
-
+### Output
+* List of groups.
 ### How does it work?
 
 * number of groups = `ceil(num_members/group_size)`
