@@ -23,7 +23,7 @@ carries more information, is easier to collect, and makes aggregating preference
 ### Note
 
 * Increasing `iter_count` and `final_iter_count` improves the matching but also increases execution time significantly.
-* Each run of algorithm will give slightly different results (as initial step involves choosing random members ). So, looping till a desired score threshold is reached is
+* Each run of algorithm will give slightly different results (as initial step involves choosing random members). So, looping till a desired score threshold is reached is
   possible.
   
 ### Got a web app for this?
