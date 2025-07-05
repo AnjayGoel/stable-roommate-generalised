@@ -18,7 +18,7 @@ for grp in perfect_groups:
             pref[i][j]=10
 '''
 
-matching = Matching(pref, group_size=r, iter_count=2, final_iter_count=2)
+matching = Matching(pref, group_size=r, optim_steps=2, final_optim_steps=2)
 score, groups = matching.solve()
 print(score)
 print(groups)
