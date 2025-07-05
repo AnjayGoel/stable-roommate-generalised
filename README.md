@@ -3,7 +3,7 @@
 [![Tests](https://github.com/AnjayGoel/stable-roommate-generalised/actions/workflows/test.yml/badge.svg)](https://github.com/AnjayGoel/stable-roommate-generalised/actions/workflows/test.yml)
 
 A heuristic algorithm for solving a
-generalised [stable roommate problem](https://en.wikipedia.org/wiki/Stable_roommates_problem), i.e. forming `k` groups
+generalised [stable roommate problem](https://en.wikipedia.org/wiki/Stable_roommates_problem), i.e. forming `k` sized groups
 out of `n` people when each person has some preference for others. This was inspired by the
 difficulty in forming groups for college projects. While this algorithm doesn't guarantee a stable
 solution, it does provide a good approximation in reasonable time.
