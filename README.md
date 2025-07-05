@@ -2,14 +2,16 @@
 
 [![Tests](https://github.com/AnjayGoel/stable-roommate-generalised/actions/workflows/test.yml/badge.svg)](https://github.com/AnjayGoel/stable-roommate-generalised/actions/workflows/test.yml)
 
-A heuristic algorithm for solving the generalised stable roommate problem, inspired by the difficulty of forming optimal
-groups for collaborative projects. While this algorithm doesn't guarantee a stable solution, it does provides a
-good approximation in reasonable time.
+A heuristic algorithm for solving a
+generalised [stable roommate problem](https://en.wikipedia.org/wiki/Stable_roommates_problem), i.e. forming `k` groups
+out of `n` people when each person has some preference for others. This was inspired by the
+difficulty in forming groups for college projects. While this algorithm doesn't guarantee a stable
+solution, it does provide a good approximation in reasonable time.
 
 ## Overview
 
-Traditional stable roommate algorithms use ordinal preferences (rankings). This implementation uses **cardinal
-preferences** (numerical ratings) because they:
+Traditional stable roommate algorithms use ordinal preferences (rankings). This implementation uses cardinal
+preferences (numerical ratings) because they:
 
 - Carry more information about preference intensity
 - Are easier to collect from participants
@@ -21,10 +23,6 @@ preferences** (numerical ratings) because they:
 
 - **Preference Matrix**: Square matrix `P` where `P[i,j]` represents member `i`'s rating of member `j`
 - **Group Size**: Target number of members per group (`k`)
-
-### Output
-
-- List of groups that maximize overall satisfaction
 
 ### Mathematical Model
 
@@ -38,7 +36,11 @@ preferences** (numerical ratings) because they:
 
 $$\text{score}(G) = \frac{1}{k(k-1)} \sum_{i=1}^{k} \sum_{j=1, j \neq i}^{k} P[m_i, m_j]$$
 
-**Objective**: Maximize average group satisfaction across all groups
+**Objective**: Maximize average satisfaction across all groups
+
+### Output
+
+- List of groups that maximize average satisfaction across all groups
 
 ## Algorithm
 
@@ -48,13 +50,14 @@ $$\text{score}(G) = \frac{1}{k(k-1)} \sum_{i=1}^{k} \sum_{j=1, j \neq i}^{k} P[m
 2. Randomly select `num_groups` members as group seeds
 3. Initialize each group with one seed member
 
-### Phase 2: Member Assignment (Gale-Shapley Inspired)
+### Phase 2: Member Assignment ([Gale-Shapley](https://en.wikipedia.org/wiki/Gale%E2%80%93Shapley_algorithm) Inspired)
 
 For each round until all members are assigned:
 
 1. **Proposal**: Each ungrouped member proposes to their most preferred available group
 2. **Selection**: Each group accepts the member they prefer most among proposers
-3. **Optimization**: Perform `optim_steps` rounds of hill-climbing swaps between groups
+3. **Optimization**: Perform `optim_steps` rounds of [hill-climbing](https://en.wikipedia.org/wiki/Hill_climbing) swaps
+   of members between groups
 
 ### Phase 3: Final Optimization
 
@@ -63,7 +66,7 @@ For each round until all members are assigned:
 
 ### Complexity
 
-- **Time**: O(n³ × iterations) worst case
+- **Time**: O(n³) worst case
 - **Space**: O(n²) for preference matrix storage
 
 ## Usage
@@ -100,4 +103,4 @@ print(f"Groups: {groups}")
 
 ## Web Application
 
-Try the interactive version: [Group Us](https://anjaygoel.github.io/GroupUs/#/)
+Try the interactive version: [Group Us](https://groupus.anjaygoel.com/)
